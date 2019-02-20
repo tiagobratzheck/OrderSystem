@@ -20,6 +20,7 @@ public class View {
 		System.out.println("5 - Change status:");	
 		System.out.println("6 - Pay order:");
 		System.out.println("7 - Check results:");
+		System.out.println("8 - Total per table: ");
 		controller();
 	}
 
@@ -57,7 +58,10 @@ public class View {
 		}
 		if (option == 7) {
 			checkResult();
-		}else {
+		}
+		if(option == 8){
+			totalTable();
+		}else {		
 			System.out.println("Invalid Option...");
 			controller();
 		}
@@ -138,6 +142,10 @@ public class View {
 		OrderService.payingOrder(number, Status.PAYED, Payment.valueOf(option.toUpperCase()));
 								
 		input.close();		
+	}
+	
+	public static void totalTable() {
+		OrderService.valuePerTable();
 	}
 	
 	public static void checkResult() {

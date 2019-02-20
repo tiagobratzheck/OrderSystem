@@ -2,8 +2,10 @@ package services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import entities.Cashier;
 import entities.Order;
@@ -47,18 +49,38 @@ public class OrderService {
 	
 	public static void selectStatus(Status status) {
 		Map<Table, Order> orderSelected = new HashMap<>();
-		Double soma = 0.0;
+		Double sum = 0.0;
 		for (Map.Entry<Table, Order> orders : orderMap.entrySet()) {
 			if (orders.getValue().getOrderStatus() == status) {
 				orderSelected.put(orders.getKey(), orders.getValue());
-				soma += orders.getValue().getPrice();
+				sum += orders.getValue().getPrice();
 			}
 		}		
 		for (Map.Entry<Table, Order> put : orderSelected.entrySet()) {
 			System.out.println(put.getKey() + " " + put.getValue());		
 		}
-		System.out.printf("Total orders with status: "+ status + ": "+" %.2f",soma);
+		System.out.printf("Total orders with status: "+ status + ": "+" %.2f",sum);
 		View.menu();			
+	}
+	
+	public static void valuePerTable() {
+	
+		Set<Integer> tables = new HashSet<>();
+		for (Map.Entry<Table, Order> orders : orderMap.entrySet()) {
+			tables.add(orders.getKey().getNumber());
+		}		
+		for (Integer table : tables) {
+			Double sum = 0.0;
+			for (Map.Entry<Table, Order> orders : orderMap.entrySet()) {
+				if (orders.getKey().getNumber() == table) {
+					sum += orders.getValue().getPrice();
+				}				
+			}
+			System.out.println("");
+			System.out.printf("Table: " + table + ", Total orders: $" + "%.2f",sum);
+			System.out.println("");
+		}
+		View.menu();
 	}	
 	
 	public static void changingStatus(Integer number, Status status) {		
