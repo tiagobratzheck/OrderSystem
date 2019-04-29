@@ -37,32 +37,26 @@ public class View {
 		input.close();
 	}
 
-	public static void choseOption(Integer option) {
-		if (option == 1) {
+	public static void choseOption(Integer option) {		
+		switch (option) {
+		case 1:
 			makeOrder();
-		}
-		if (option == 2) {
+		case 2:
 			selectTable();
-		}
-		if (option == 3) {
+		case 3:
 			selectStatus();
-		}
-		if (option == 4) {
+		case 4:
 			totalOrder();
-		}
-		if (option == 5) {
+		case 5:
 			selectOrder();
-		}
-		if (option == 6) {
+		case 6:
 			payingOrder();
-		}
-		if (option == 7) {
+		case 7:
 			checkResult();
-		}
-		if(option == 8){
+		case 8:
 			totalTable();
-		}else {		
-			System.out.println("Invalid Option...");
+		default: 
+			System.out.println("Invalid option...");
 			controller();
 		}
 	}
@@ -72,17 +66,18 @@ public class View {
 		
 		System.out.print("Enter the table number: ");	
 		Integer tableNumber = input.nextInt(); 
+		input.nextLine();
 		
 		System.out.print("Enter the name of order: ");	
-		String orderName = input.next();
+		String orderName = input.nextLine();
 		
 		System.out.print("Enter the name of the client: ");	
-		String client = input.next();
+		String client = input.nextLine();
 		
 		System.out.print("Enter the number: ");	
 		Integer orderNumber = input.nextInt();
 		
-		System.out.print("Status: ");	
+		System.out.print("Status (ordered, payed, processing, delivered): ");	
 		String status = input.next();
 		
 		System.out.print("Order price: ");	
@@ -105,7 +100,7 @@ public class View {
 
 	public static void selectStatus() {
 		Scanner input = new Scanner(System.in);
-		System.out.print("Status: ");	
+		System.out.print("Status (ordered, payed, processing, delivered): ");	
 		String status = input.next();
 		
 		OrderService.selectStatus(Status.valueOf(status.toUpperCase()));
@@ -127,7 +122,7 @@ public class View {
 
 	public static void changingStatus(Integer number) {
 		Scanner input = new Scanner(System.in);
-		System.out.print("Status: ");	
+		System.out.print("Status (ordered, payed, processing, delivered): ");	
 		String status = input.next();
 		OrderService.changingStatus(number, Status.valueOf(status.toUpperCase()));
 		input.close();
@@ -137,7 +132,7 @@ public class View {
 		Scanner input = new Scanner(System.in);
 		System.out.print("Enter the order number: ");	
 		Integer number = input.nextInt();	
-		System.out.print("cash or credircard: ");	
+		System.out.print("cash or creditcard: ");	
 		String option = input.next();
 		OrderService.payingOrder(number, Status.PAYED, Payment.valueOf(option.toUpperCase()));
 								
